@@ -2,35 +2,119 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Golden Hawks 20-Year Legacy Photo Customizer</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Golden Hawks 20-Year Legacy — Photo Editor</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f2f2f2;font-family:Arial,sans-serif;color:#222;text-align:center;padding:18px 10px 30px}h1{font-size:22px;margin:4px 0 6px}.sub{font-size:14px;margin:0 auto 16px;color:#555}.wrap{max-width:760px;margin:auto}.plaque{position:relative;width:100%;max-width:760px;margin:0 auto;overflow:hidden;line-height:0;background:#ddd}.plaque img.base{display:block;width:100%;height:auto}.photo-slot{position:absolute;overflow:hidden;cursor:pointer;background:rgba(255,255,255,.15)}.photo-slot img{width:100%;height:100%;object-fit:cover;display:block}.slot-left{left:14.1%;top:39.0%;width:28.8%;height:31.2%}.slot-right{left:57.0%;top:39.0%;width:28.8%;height:31.2%}input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.55);font-weight:700;font-size:clamp(11px,2.2vw,16px);color:#333;line-height:1.2;padding:5px}.has-photo .hint{display:none}.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:9px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;background:#222;color:#fff}button.secondary{background:#777}.note{font-size:12px;color:#666;margin:10px auto 0;max-width:620px;line-height:1.4}@media(max-width:480px){body{padding-top:10px}h1{font-size:19px}.sub{font-size:13px}.controls button{width:100%;max-width:320px}}
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+  header { width:100%; max-width:1100px; padding:18px 16px 8px; text-align:center; }
+  h1 { margin:0 0 6px; font-size:clamp(20px,4vw,30px); }
+  .sub { margin:0; opacity:.9; font-size:14px; }
+  .wrap { width:min(96vw,900px); padding:10px 0 28px; }
+  .plaque { position:relative; width:100%; line-height:0; overflow:hidden; border-radius:8px; }
+  .base { display:block; width:100%; height:auto; }
+  .photo-slot { position:absolute; overflow:hidden; cursor:pointer; background:rgba(255,255,255,.12); }
+  .photo-slot img { width:100%; height:100%; object-fit:cover; display:block; }
+  .slot-left { left:14.58%; top:28.22%; width:19.40%; height:50.68%; }
+  .slot-right { left:61.91%; top:23.14%; width:25.85%; height:53.91%; }
+  .photo-slot input { position:absolute; width:1px; height:1px; opacity:0; }
+  .hint { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(255,255,255,.58); color:#222; font-weight:700; font-size:clamp(10px,2.2vw,16px); line-height:1.2; padding:8px; }
+  .has-photo .hint { display:none; }
+  .controls { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
+  button { border:0; border-radius:10px; padding:13px 18px; font-size:15px; font-weight:700; cursor:pointer; }
+  #save { background:#fff; color:#111; }
+  #clear { background:#666; color:#fff; }
+  .note { margin:12px auto 0; max-width:700px; font-size:12px; line-height:1.45; color:#ccc; text-align:center; }
 </style>
 </head>
 <body>
+<header>
+  <h1>Golden Hawks 20-Year Legacy</h1>
+  <p class="sub">Tap either photo square to add your own picture.</p>
+</header>
 <div class="wrap">
-<h1>Golden Hawks 20-Year Legacy</h1>
-<p class="sub">Tap either photo square to add your own picture.</p>
-<div class="plaque" id="plaque">
-<img class="base" id="base" alt="Golden Hawks 20-Year Legacy plaque">
-<label class="photo-slot slot-left" id="leftSlot" aria-label="Choose left photo"><input id="leftInput" type="file" accept="image/*"><img id="leftPhoto" alt="Left custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
-<label class="photo-slot slot-right" id="rightSlot" aria-label="Choose right photo"><input id="rightInput" type="file" accept="image/*"><img id="rightPhoto" alt="Right custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
-</div>
-<div class="controls"><button id="save">Save Finished Plaque</button><button class="secondary" id="clear">Clear Photos</button></div>
-<p class="note">Your photos stay on your device while you edit. The finished plaque is saved as a PNG.</p>
+  <div class="plaque" id="plaque">
+    <img class="base" src="data:image/png;base64,REPLACE_ME" alt="Golden Hawks 20-Year Legacy plaque">
+    <label class="photo-slot slot-left" id="leftSlot" aria-label="Choose left photo"><input id="leftInput" type="file" accept="image/*"><img id="leftPhoto" alt="Left custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
+    <label class="photo-slot slot-right" id="rightSlot" aria-label="Choose right photo"><input id="rightInput" type="file" accept="image/*"><img id="rightPhoto" alt="Right custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
+  </div>
+  <div class="controls"><button id="save">Save / Download Finished Plaque</button><button id="clear">Clear Photos</button></div>
+  <p class="note">Your photos stay on your device while you edit. On iPhone or Samsung, the Save button opens the phone share/save options. If it opens the picture by itself, press and hold the picture to save it to Photos/Gallery.</p>
 </div>
 <script>
-const PLAQUE_DATA='data:image/png;base64,REPLACE_ME';
-const base=document.getElementById('base');
-base.src=PLAQUE_DATA;
-const leftInput=document.getElementById('leftInput'),rightInput=document.getElementById('rightInput');
-const leftPhoto=document.getElementById('leftPhoto'),rightPhoto=document.getElementById('rightPhoto');
-const leftSlot=document.getElementById('leftSlot'),rightSlot=document.getElementById('rightSlot');
-function setup(input,img,slot){input.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{img.src=r.result;slot.classList.add('has-photo')};r.readAsDataURL(f)})}
-setup(leftInput,leftPhoto,leftSlot);setup(rightInput,rightPhoto,rightSlot);
-document.getElementById('clear').onclick=()=>{leftInput.value='';rightInput.value='';leftPhoto.removeAttribute('src');rightPhoto.removeAttribute('src');leftSlot.classList.remove('has-photo');rightSlot.classList.remove('has-photo')};
-document.getElementById('save').onclick=()=>{const b=document.getElementById('base');if(!b.complete){alert('Please wait for the plaque to load.');return}const c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=b.naturalWidth;c.height=b.naturalHeight;ctx.drawImage(b,0,0);const draw=(img,slot)=>{if(!img.src)return;const x=slot.offsetLeft*(c.width/b.clientWidth),y=slot.offsetTop*(c.height/b.clientWidth),w=slot.offsetWidth*(c.width/b.clientWidth),h=slot.offsetHeight*(c.height/b.clientWidth);ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.drawImage(img,x,y,w,h);ctx.restore()};draw(leftPhoto,leftSlot);draw(rightPhoto,rightSlot);const a=document.createElement('a');a.download='golden-hawks-20-year-legacy.png';a.href=c.toDataURL('image/png');a.click()};
+const state = { left:null, right:null };
+function loadPhoto(input, key, slotId, imgId) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    state[key] = e.target.result;
+    document.getElementById(imgId).src = e.target.result;
+    document.getElementById(slotId).classList.add('has-photo');
+  };
+  reader.readAsDataURL(file);
+}
+const leftInputEl = document.getElementById('leftInput');
+const rightInputEl = document.getElementById('rightInput');
+leftInputEl.addEventListener('change', () => loadPhoto(leftInputEl,'left','leftSlot','leftPhoto'));
+rightInputEl.addEventListener('change', () => loadPhoto(rightInputEl,'right','rightSlot','rightPhoto'));
+function clearPhotos() {
+  state.left = state.right = null;
+  ['leftSlot','rightSlot'].forEach(id => document.getElementById(id).classList.remove('has-photo'));
+  document.getElementById('leftPhoto').src = document.getElementById('rightPhoto').src = '';
+  leftInputEl.value = rightInputEl.value = '';
+}
+function drawCover(ctx, data, slot) {
+  return new Promise(resolve => {
+    if (!data) { resolve(); return; }
+    const im = new Image();
+    im.onload = () => {
+      const scale = Math.max(slot.w/im.width, slot.h/im.height);
+      const sw = slot.w/scale, sh = slot.h/scale;
+      ctx.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,slot.x,slot.y,slot.w,slot.h);
+      resolve();
+    };
+    im.src = data;
+  });
+}
+async function downloadPlaque() {
+  const base = document.querySelector('.base');
+  if (!base.complete || !base.naturalWidth) { alert('Please wait for the plaque to load, then try again.'); return; }
+  const canvas = document.createElement('canvas');
+  canvas.width = base.naturalWidth;
+  canvas.height = base.naturalHeight;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(base,0,0,canvas.width,canvas.height);
+  const sx = canvas.width / 1536, sy = canvas.height / 1024;
+  const left = {x:224*sx,y:289*sy,w:298*sx,h:519*sy};
+  const right = {x:951*sx,y:237*sy,w:397*sx,h:552*sy};
+  await drawCover(ctx,state.left,left);
+  await drawCover(ctx,state.right,right);
+  canvas.toBlob(saveBlob,'image/png');
+}
+async function saveBlob(blob) {
+  if (!blob) { alert('Sorry, the plaque could not be created. Please try again.'); return; }
+  const filename='golden-hawks-20-year-legacy.png';
+  try {
+    if (navigator.share && window.File) {
+      const file = new File([blob],filename,{type:'image/png'});
+      if (!navigator.canShare || navigator.canShare({files:[file]})) {
+        await navigator.share({files:[file],title:'Golden Hawks 20-Year Legacy'});
+        return;
+      }
+    }
+  } catch (err) {
+    if (err && err.name === 'AbortError') return;
+  }
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url,'_blank');
+  if (!w) {
+    const a=document.createElement('a'); a.href=url; a.download=filename; a.click();
+  }
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+document.getElementById('save').addEventListener('click',downloadPlaque);
+document.getElementById('clear').addEventListener('click',clearPhotos);
 </script>
 </body>
 </html>
