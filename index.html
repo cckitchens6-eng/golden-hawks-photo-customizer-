@@ -34,7 +34,7 @@
 </header>
 <div class="wrap">
   <div class="plaque" id="plaque">
-    <img class="base" src="data:image/png;base64,REPLACE_ME" alt="Golden Hawks 20-Year Legacy plaque">
+    <img class="base" src="golden-hawks-20-year-legacy.jpg" alt="Golden Hawks 20-Year Legacy plaque">
     <label class="photo-slot slot-left" id="leftSlot" aria-label="Choose left photo"><input id="leftInput" type="file" accept="image/*"><img id="leftPhoto" alt="Left custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
     <label class="photo-slot slot-right" id="rightSlot" aria-label="Choose right photo"><input id="rightInput" type="file" accept="image/*"><img id="rightPhoto" alt="Right custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
   </div>
@@ -81,13 +81,12 @@ async function downloadPlaque() {
   const base = document.querySelector('.base');
   if (!base.complete || !base.naturalWidth) { alert('Please wait for the plaque to load, then try again.'); return; }
   const canvas = document.createElement('canvas');
-  canvas.width = base.naturalWidth;
-  canvas.height = base.naturalHeight;
+  canvas.width = 1536;
+  canvas.height = 1024;
   const ctx = canvas.getContext('2d');
   ctx.drawImage(base,0,0,canvas.width,canvas.height);
-  const sx = canvas.width / 1536, sy = canvas.height / 1024;
-  const left = {x:224*sx,y:289*sy,w:298*sx,h:519*sy};
-  const right = {x:951*sx,y:237*sy,w:397*sx,h:552*sy};
+  const left = {x:224,y:289,w:298,h:519};
+  const right = {x:951,y:237,w:397,h:552};
   await drawCover(ctx,state.left,left);
   await drawCover(ctx,state.right,right);
   canvas.toBlob(saveBlob,'image/png');
