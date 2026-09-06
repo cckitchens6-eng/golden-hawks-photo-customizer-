@@ -6,7 +6,10 @@
 <title>Golden Hawks 20-Year Legacy — Photo Editor</title>
 <style>
   * { box-sizing:border-box; }
-  body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+  body {
+    margin:0; font-family:Arial,sans-serif; background:#111; color:#fff;
+    min-height:100vh; display:flex; flex-direction:column; align-items:center;
+  }
   header { width:100%; max-width:1100px; padding:18px 16px 8px; text-align:center; }
   h1 { margin:0 0 6px; font-size:clamp(20px,4vw,30px); }
   .sub { margin:0; opacity:.9; font-size:14px; }
@@ -34,7 +37,7 @@
 </header>
 <div class="wrap">
   <div class="plaque" id="plaque">
-    <img class="base" crossorigin="anonymous" src="https://cdn.jsdelivr.net/gh/cckitchens6-eng/golden-hawks-photo-customizer-@main/golden-hawks-20-year-legacy.jpg?v=4" alt="Golden Hawks 20-Year Legacy plaque">
+    <img class="base" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2w" alt="Golden Hawks 20-Year Legacy plaque">
     <label class="photo-slot slot-left" id="leftSlot" aria-label="Choose left photo"><input id="leftInput" type="file" accept="image/*"><img id="leftPhoto" alt="Left custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
     <label class="photo-slot slot-right" id="rightSlot" aria-label="Choose right photo"><input id="rightInput" type="file" accept="image/*"><img id="rightPhoto" alt="Right custom photo"><span class="hint">TAP TO ADD PHOTO</span></label>
   </div>
